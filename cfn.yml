@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: |
+
+Parameters:
+     Parameters:
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-minimal-kernel-default-x86_64'
+
+Resources:
+    Resources:
+  MuhammedInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: t2.micro
+      KeyName: firstkey
+      SecurityGroups: 
+        - !Ref MuhammedSecGRP
+      Tags: 
+        - Key: Name
+          Value: Web_Server_of_Kittens_Project_101
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          dnf update -y
+          dnf install -y httpd
+          cd /var/www/html
+          chmod -R 777 /var/www/html
+          dnf install wget -y
+
+          systemctl restart httpd
+          systemctl enable httpd
+          systemctl start httpd
+  MuhammedSecGRP:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allows SSH and HTTP connection
+      SecurityGroupIngress: 
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0   
+       SecurityGroupIngress: 
+        - IpProtocol: http
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0       
+      Tags: 
+        - Key: Name
+          Value: Muhammed-Sec-Group-CloudFormation
