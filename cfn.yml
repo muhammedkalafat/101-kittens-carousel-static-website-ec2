@@ -3,13 +3,11 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: |
 
 Parameters:
-     Parameters:
   LatestAmiId:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-minimal-kernel-default-x86_64'
 
 Resources:
-    Resources:
   MuhammedInstance:
     Type: AWS::EC2::Instance
     Properties:
@@ -45,7 +43,7 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0   
-       SecurityGroupIngress: 
+      SecurityGroupIngress: 
         - IpProtocol: http
           FromPort: 80
           ToPort: 80
