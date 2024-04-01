@@ -1,7 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 
 Description: |
-
+  Kittens Carousel is a static website 
+  application deployed with Apache Web Server 
+  on AWS Elastic Compute Cloud (EC2) 
+  Instance using AWS Cloudformation Service.
 Parameters:
   LatestAmiId:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
@@ -18,7 +21,7 @@ Resources:
         - !Ref MuhammedSecGRP
       Tags: 
         - Key: Name
-          Value: Web_Server_of_Kittens_Project_101
+          Value: !Sub "Web Server of Kittens Project 101"
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
@@ -51,3 +54,7 @@ Resources:
       Tags: 
         - Key: Name
           Value: Muhammed-Sec-Group-CloudFormation
+Outputs:
+  WebsiteURL:
+    Description: URL of the website
+    Value: !Sub http://${MuhammedInstance.PublicDnsName}
