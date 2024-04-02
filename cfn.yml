@@ -22,13 +22,18 @@ Resources:
       Tags: 
         - Key: Name
           Value: !Sub "Web Server of Kittens Project 101"
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash
+      UserData: !Base64 |
+          #! /bin/bash
           dnf update -y
           dnf install httpd -y
+          dnf install wget -y
+          FOLDER="https://raw.githubusercontent.com/muhammedkalafat/101-kittens-carousel-static-website-ec2/main/static-web"
           cd /var/www/html
-          wget https://raw.githubusercontent.com/muhammedkalafat/101-kittens-carousel-static-website-ec2/main/userdata.sh
+          wget ${FOLDER}/index.html
+          wget ${FOLDER}/cat0.jpg
+          wget ${FOLDER}/cat1.jpg
+          wget ${FOLDER}/cat2.jpg
+          wget ${FOLDER}/cat3.png
           systemctl start httpd
           systemctl enable httpd
   MuhammedSecGRP:
